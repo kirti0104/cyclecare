@@ -1,3 +1,5 @@
-# dependencies
-cyclecarefrontend/node_modules
-cyclecarebackend/node_modules
+node_modules/
+
+# Explicit ignores
+cyclecarebackend/node_modules/
+cyclecarefrontend/node_modules/
