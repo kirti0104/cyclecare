@@ -1,5 +1,6 @@
 import express, { Router } from "express";
 import authRouter from "./authRoute";
+import cycleRouter from "./cycleRoutes";
 
 interface Route {
   path: string;
@@ -13,6 +14,10 @@ const defaultRoutes: Route[] = [
     path: "/auth",
     route: authRouter,
   },
+  {
+    path: "/cycle",
+    route: cycleRouter,
+  }
 
 
 ];

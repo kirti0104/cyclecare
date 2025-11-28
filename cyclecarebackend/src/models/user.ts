@@ -8,6 +8,8 @@ export interface IUser extends Document {
   dob?: Date;
   phoneNumber?: string;
   address?: string;
+  isProfileComplete?: boolean;
+  isDeleted?: boolean;
   createdAt?: Date;
   updatedAt?: Date;
   toJSON(): Record<string, any>;
@@ -22,6 +24,10 @@ const userSchema: Schema<IUser> = new mongoose.Schema(
     dob: { type: Date },
     phoneNumber: { type: String, trim: true },
     address: { type: String, trim: true },
+    isProfileComplete: { type: Boolean, default: false },
+    isDeleted: { type: Boolean, default: false },
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now },
   },
   { timestamps: true }
 );

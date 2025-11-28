@@ -50,8 +50,47 @@ const register = async (data: UserBody) => {
     
   } 
  
+const login = async (data:UserBody) => {
+
+  console.log("Login data received in authService:", data);
+  try{
+    const user = await User.findOne( { email:data.email } );
+    console.log("User found:", user);
+
+    if (!user) {
+      throw new AppError("User does not exists", 401);
+    }
+
+
+
+    const isPasswordValid = await bcrypt.compare(data.password, user.password);
+
+    if (!isPasswordValid) {
+      throw new AppError("Invalid email or password", 401);
+    }
+
+    const JWT_token = await generateToken(user);
+    return {user, JWT_token}
+  }
+  catch(error){
+      if (error instanceof AppError) {
+    console.log("Login error:", error.message);
+    throw error;
+  }
+
+  // For other unexpected errors
+  if (error instanceof Error) {
+    console.log("Unexpected Error:", error.message);
+    throw error;
+  }
+
+  throw new Error("Unknown error occurred");
+  }
+
+    
+  }
 
 
 export default {
-  register,
+  register,login
 };

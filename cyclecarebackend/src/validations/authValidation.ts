@@ -48,3 +48,17 @@ export const signupSchema = Joi.object({
     }),
  
 });
+
+
+export const loginSchema = Joi.object({
+  email: Joi.string().email().trim().required().messages({
+    'string.email': 'Email must be a valid email address',
+    'string.empty': 'Email cannot be an empty field',
+    'any.required': 'Email is a required field'
+  }),
+  password: Joi.string().min(8).required().messages({
+    'string.min': 'Password must be at least 8 characters long',
+    'string.empty': 'Password cannot be an empty field',
+    'any.required': 'Password is a required field'
+  }),
+});

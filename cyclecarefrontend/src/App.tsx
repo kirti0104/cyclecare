@@ -18,15 +18,27 @@ import Blank from "./pages/Blank";
 import AppLayout from "./layout/AppLayout";
 import { ScrollToTop } from "./components/common/ScrollToTop";
 import Home from "./pages/Dashboard/Home";
+import ProtectedRoute from "./routes/ProtectedRoute";
+import GuestRoute from "./routes/GuestRoute";
+import CycleInfoForm from "./pages/cycleInfo/CycleInfo";
+import { Toaster } from "react-hot-toast";
 
 export default function App() {
   return (
     <>
+    <Toaster position="top-right" reverseOrder={false} />
       <Router>
         <ScrollToTop />
         <Routes>
           {/* Dashboard Layout */}
-          <Route path="/" element={<AppLayout />}>
+          <Route
+            path="/"
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Home />} />
 
             {/* Others Page */}
@@ -52,10 +64,26 @@ export default function App() {
             <Route path="line-chart" element={<LineChart />} />
             <Route path="bar-chart" element={<BarChart />} />
           </Route>
+          <Route path="/cycle-info" element={<CycleInfoForm />} />  
 
           {/* Auth Layout */}
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/signup" element={<SignUp />} />
+          <Route
+            path="/signin"
+            element={
+              <GuestRoute>
+                <SignIn />
+              </GuestRoute>
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <GuestRoute>
+                <SignUp />
+              </GuestRoute>
+            }
+          />
+          
 
           {/* Fallback Route */}
           <Route path="*" element={<NotFound />} />

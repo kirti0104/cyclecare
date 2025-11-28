@@ -19,3 +19,19 @@ export const register = catchAsyncError(
   }
 );
 
+export const login = catchAsyncError( 
+  async (req: Request, res: Response,next: NextFunction): Promise<void> => {
+    const body: any = req.body;
+
+    const { user, JWT_token} = await authService.login(body)
+    console.log("User logged in:", user,JWT_token);
+
+ 
+    res.status(responseMessages.msgCode.successCode).json({
+      success: true,
+      message: "User logged in successfully",
+      token: JWT_token,
+      data: user
+    });
+  } 
+);

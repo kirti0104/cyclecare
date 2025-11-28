@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const apiUrl= process.env.REACT_APP_API_URL || 'http://localhost:5000/api/v1';
+const apiUrl= import.meta.env.VITE_SERVER_API_URL || 'http://localhost:5000/api/v1';
 console.log("API URL:", apiUrl);
 
 export type SignupCredentialsDTO = {
@@ -15,5 +15,16 @@ export type SignupCredentialsDTO = {
 };
 
 export const SignupUser = (data: SignupCredentialsDTO) => {
-  return axios.post(`${apiUrl}/auth/register`, data);
+  return axios.post(`${apiUrl}/auth/register-user`, data);
+};
+
+interface LoginResponse {
+  token: string;
+  data: {
+   isprofileComplete: boolean;
+  };
+}
+
+export const loginUser = (data: { email: string; password: string }) => {
+  return axios.post<LoginResponse>(`${apiUrl}/auth/login-user`, data);
 };
